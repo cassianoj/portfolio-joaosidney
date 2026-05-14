@@ -1,0 +1,87 @@
+---
+import { timeline, timelineRole, timelineDescription } from "../data/timeline";
+import type { Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  /** "compact" mostra apenas os 3 últimos eventos sem descrição; "full" mostra tudo. */
+  variant?: "compact" | "full";
+}
+
+const { locale, variant = "full" } = Astro.props;
+const events = variant === "compact" ? timeline.slice(0, 3) : timeline;
+---
+
+<ol class="relative space-y-6 border-l border-border pl-6">
+  {
+    events.map((ev) => (
+      <li class="relative">
+        <span
+          class:list={[
+            "absolute -left-[31px] top-1.5 grid h-4 w-4 place-items-center rounded-full ring-4 ring-bg",
+            ev.highlight ? "bg-accent" : "bg-border",
+          ]}
+          aria-hidden="true"
+        />
+        <article
+          class:list={[
+            "rounded-lg border bg-surface p-5 transition-colors",
+            ev.highlight ? "border-accent/40" : "border-border",
+          ]}
+        >
+          <header class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <div>
+              <p class="font-mono text-xs uppercase tracking-wider text-accent">
+                {ev.period}
+              </p>
+              <h3 class="mt-1 text-base font-semibold text-fg sm:text-lg">
+                {timelineRole(ev, locale)}
+                <span class="font-normal text-fg-muted"> · {ev.organization}</span>
+              </h3>
+            </div>
+            {ev.highlight && ev.link && (
+              <a
+                href={ev.link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 rounded-md border border-accent/40 px-2.5 py-1 text-xs font-medium text-accent transition-colors hover:bg-accent hover:text-bg"
+              >
+                {locale === "pt" ? ev.link.labelPt : ev.link.labelEn}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17L17 7M7 7h10v10" />
+                </svg>
+              </a>
+            )}
+          </header>
+
+          {variant === "full" && (
+            <p class="mt-3 text-sm leading-relaxed text-fg-muted">
+              {timelineDescription(ev, locale)}
+            </p>
+          )}
+
+          {variant === "full" && ev.tags && ev.tags.length > 0 && (
+            <ul class="mt-4 flex flex-wrap gap-1.5">
+              {ev.tags.map((tag) => (
+                <li class="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-fg-muted">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          )}
+        </article>
+      </li>
+    ))
+  }
+</ol>

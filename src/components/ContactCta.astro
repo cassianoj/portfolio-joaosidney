@@ -1,0 +1,41 @@
+---
+import type { Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy =
+  locale === "pt"
+    ? {
+        heading: "Vamos conversar?",
+        body:
+          "Procurando alguém que entrega análise de dados com olhar de negócio? Que entende SAP tanto quanto Databricks? Me chame.",
+        cta: "Abrir formulário de contato",
+        href: "/pt/contato",
+      }
+    : {
+        heading: "Let's talk.",
+        body:
+          "Looking for someone who delivers data analytics with a business eye? Who understands SAP as well as Databricks? Reach out.",
+        cta: "Open contact form",
+        href: "/en/contact",
+      };
+---
+
+<section class="border-t border-border bg-surface/30">
+  <div class="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-20">
+    <h2 class="text-3xl font-bold tracking-tight text-fg sm:text-4xl">
+      {copy.heading}
+    </h2>
+    <p class="mx-auto mt-4 max-w-2xl text-lg text-fg-muted">{copy.body}</p>
+    <a
+      href={copy.href}
+      class="mt-8 inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-medium text-bg transition-colors hover:bg-accent-hover"
+    >
+      {copy.cta}
+    </a>
+  </div>
+</section>

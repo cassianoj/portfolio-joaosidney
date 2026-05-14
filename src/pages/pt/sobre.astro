@@ -1,0 +1,104 @@
+---
+import Base from "../../layouts/Base.astro";
+import Timeline from "../../components/Timeline.astro";
+import { aboutNarrative, education, certifications, languages } from "../../data/about";
+---
+
+<Base
+  locale="pt"
+  title="Sobre — João Sidney Cassiano"
+  description="Trajetória profissional de João Sidney: engenharia industrial, controladoria, ciência de dados e empreendedorismo."
+>
+  <article class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:py-24">
+    <header class="mb-12">
+      <p class="font-mono text-sm text-accent">Sobre</p>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-fg sm:text-5xl">
+        Da indústria ao dado, com escala humana no meio.
+      </h1>
+    </header>
+
+    <div class="space-y-5 text-lg leading-relaxed text-fg-muted">
+      {aboutNarrative.pt.map((p) => <p>{p}</p>)}
+    </div>
+
+    <section class="mt-16">
+      <h2 class="mb-8 text-2xl font-bold tracking-tight text-fg sm:text-3xl">
+        Trajetória
+      </h2>
+      <Timeline locale="pt" variant="full" />
+    </section>
+
+    <section class="mt-16 grid gap-10 md:grid-cols-2">
+      <div>
+        <h2 class="mb-6 text-xl font-bold tracking-tight text-fg">
+          Formação
+        </h2>
+        <ul class="space-y-4">
+          {
+            education.map((ed) => (
+              <li class="rounded-lg border border-border bg-surface p-4">
+                <p class="font-mono text-xs uppercase tracking-wider text-accent">
+                  {ed.period}
+                </p>
+                <p class="mt-1 font-semibold text-fg">{ed.titlePt}</p>
+                <p class="text-sm text-fg-muted">{ed.institution}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="mb-6 text-xl font-bold tracking-tight text-fg">
+          Certificações
+        </h2>
+        <ul class="space-y-4">
+          {
+            certifications.map((cert) => (
+              <li class="rounded-lg border border-border bg-surface p-4">
+                <p class="font-mono text-xs uppercase tracking-wider text-accent">
+                  {cert.year}
+                </p>
+                <p class="mt-1 font-semibold text-fg">{cert.titlePt}</p>
+                <p class="text-sm text-fg-muted">{cert.issuer}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="mb-6 text-xl font-bold tracking-tight text-fg">Idiomas</h2>
+      <ul class="flex flex-wrap gap-3">
+        {
+          languages.map((lang) => (
+            <li class="rounded-md border border-border bg-surface px-4 py-2.5">
+              <span class="font-medium text-fg">{lang.namePt}</span>
+              <span class="ml-2 text-sm text-fg-muted">— {lang.levelPt}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section
+      class="mt-16 rounded-lg border border-border bg-surface p-6 text-fg-muted"
+    >
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="font-semibold text-fg">Currículo em PDF</p>
+          <p class="mt-1 text-sm">
+            Versão completa pra impressão / envio ao RH.
+          </p>
+        </div>
+        <a
+          href="/cv/joaosidney-cv-pt.pdf"
+          class="inline-flex items-center justify-center rounded-md border border-accent bg-surface px-4 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-bg"
+        >
+          Baixar CV (PT)
+        </a>
+      </div>
+    </section>
+  </article>
+</Base>

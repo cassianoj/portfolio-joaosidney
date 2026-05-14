@@ -1,49 +1,14 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { useTranslations } from "../../i18n";
-
-const t = useTranslations("en");
+import Hero from "../../components/Hero.astro";
+import SkillsSection from "../../components/SkillsSection.astro";
+import MiniTimelineSection from "../../components/MiniTimelineSection.astro";
+import ContactCta from "../../components/ContactCta.astro";
 ---
 
 <Base locale="en">
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
-    <div class="max-w-3xl">
-      <p class="mb-3 font-mono text-sm text-accent">
-        Data Specialist · Porto Bank
-      </p>
-      <h1 class="text-4xl font-bold tracking-tight text-fg sm:text-5xl lg:text-6xl">
-        João Sidney Cassiano
-      </h1>
-      <p class="mt-6 text-lg leading-relaxed text-fg-muted">
-        Hybrid path across industrial engineering, controllership, data science and
-        entrepreneurship. I build data solutions that actually understand the
-        business — because I've lived every layer of it.
-      </p>
-
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a
-          href="/en/projects"
-          class="inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-bg transition-colors hover:bg-accent-hover"
-        >
-          {t("nav.projects")}
-        </a>
-        <a
-          href="/en/contact"
-          class="inline-flex items-center justify-center rounded-md border border-border bg-surface px-5 py-2.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent"
-        >
-          {t("nav.contact")}
-        </a>
-      </div>
-    </div>
-
-    <div class="mt-16 rounded-lg border border-border bg-surface p-6 text-fg-muted">
-      <p class="font-mono text-xs uppercase tracking-wider text-accent">
-        Work in progress
-      </p>
-      <p class="mt-2 text-sm">
-        Base structure only — full content (skills, featured projects, visual
-        timeline) lands in the next phase of the project.
-      </p>
-    </div>
-  </section>
+  <Hero locale="en" />
+  <SkillsSection locale="en" />
+  <MiniTimelineSection locale="en" />
+  <ContactCta locale="en" />
 </Base>

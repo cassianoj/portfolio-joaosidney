@@ -1,0 +1,46 @@
+---
+import type { Locale } from "../i18n";
+import Timeline from "./Timeline.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy =
+  locale === "pt"
+    ? {
+        heading: "Trajetória",
+        intro: "Da indústria ao banco, passando pelo próprio produto.",
+        cta: "Ver carreira completa",
+        href: "/pt/sobre",
+      }
+    : {
+        heading: "Career path",
+        intro: "From industry to banking, with a product detour in between.",
+        cta: "See full career",
+        href: "/en/about",
+      };
+---
+
+<section>
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+    <header class="mb-10 flex flex-wrap items-end justify-between gap-4">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
+          {copy.heading}
+        </h2>
+        <p class="mt-3 text-fg-muted">{copy.intro}</p>
+      </div>
+      <a
+        href={copy.href}
+        class="text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+      >
+        {copy.cta} →
+      </a>
+    </header>
+
+    <Timeline locale={locale} variant="compact" />
+  </div>
+</section>
