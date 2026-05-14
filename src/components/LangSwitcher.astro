@@ -1,0 +1,40 @@
+---
+import { switchLocale, type Locale, locales, useTranslations } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const links = locales.map((l) => ({
+  code: l,
+  href: switchLocale(Astro.url.pathname, l),
+  isActive: l === locale,
+}));
+---
+
+<div
+  class="inline-flex items-center rounded-md border border-border bg-surface p-0.5 text-xs"
+  role="group"
+  aria-label={t("lang.switch")}
+>
+  {
+    links.map((link) => (
+      <a
+        href={link.href}
+        hreflang={link.code}
+        aria-current={link.isActive ? "true" : undefined}
+        class:list={[
+          "rounded px-2 py-1 font-mono uppercase tracking-wide transition-colors",
+          link.isActive
+            ? "bg-accent text-bg"
+            : "text-fg-muted hover:text-fg",
+        ]}
+      >
+        {link.code}
+      </a>
+    ))
+  }
+</div>

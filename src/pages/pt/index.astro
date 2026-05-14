@@ -1,0 +1,49 @@
+---
+import Base from "../../layouts/Base.astro";
+import { useTranslations } from "../../i18n";
+
+const t = useTranslations("pt");
+---
+
+<Base locale="pt">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+    <div class="max-w-3xl">
+      <p class="mb-3 font-mono text-sm text-accent">
+        Especialista em Dados · Porto Bank
+      </p>
+      <h1 class="text-4xl font-bold tracking-tight text-fg sm:text-5xl lg:text-6xl">
+        João Sidney Cassiano
+      </h1>
+      <p class="mt-6 text-lg leading-relaxed text-fg-muted">
+        Trajetória híbrida em engenharia industrial, controladoria, ciência de dados
+        e empreendedorismo. Construo soluções de dados que entendem o negócio porque
+        já vivi cada camada dele.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/pt/projetos"
+          class="inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-bg transition-colors hover:bg-accent-hover"
+        >
+          {t("nav.projects")}
+        </a>
+        <a
+          href="/pt/contato"
+          class="inline-flex items-center justify-center rounded-md border border-border bg-surface px-5 py-2.5 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent"
+        >
+          {t("nav.contact")}
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-16 rounded-lg border border-border bg-surface p-6 text-fg-muted">
+      <p class="font-mono text-xs uppercase tracking-wider text-accent">
+        Em construção
+      </p>
+      <p class="mt-2 text-sm">
+        Página inicial em estrutura base — o conteúdo completo (skills, projetos em
+        destaque, timeline visual) entra na próxima fase do projeto.
+      </p>
+    </div>
+  </section>
+</Base>

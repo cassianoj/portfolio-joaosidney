@@ -1,0 +1,39 @@
+---
+import { useTranslations, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-border bg-surface">
+  <div
+    class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-6 text-sm text-fg-muted sm:flex-row sm:px-6"
+  >
+    <p>© {year} João Sidney Cassiano. {t("footer.rights")}</p>
+    <div class="flex items-center gap-4">
+      <a
+        href="https://github.com/cassianoj"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-fg"
+      >
+        GitHub
+      </a>
+      <a
+        href="https://www.linkedin.com/in/joaosidney/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-fg"
+      >
+        LinkedIn
+      </a>
+      <span class="hidden sm:inline">·</span>
+      <span class="text-xs">{t("footer.built_with")}</span>
+    </div>
+  </div>
+</footer>

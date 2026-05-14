@@ -1,0 +1,17 @@
+{
+  "site.title": "João Sidney Cassiano — Portfólio",
+  "site.description": "Especialista em Dados @ Porto Bank. Trajetória híbrida: engenharia industrial, controladoria, dados e empreendedorismo.",
+  "nav.home": "Início",
+  "nav.about": "Sobre",
+  "nav.projects": "Projetos",
+  "nav.dashboards": "Dashboards",
+  "nav.contact": "Contato",
+  "theme.toggle": "Alternar tema",
+  "theme.light": "Claro",
+  "theme.dark": "Escuro",
+  "lang.switch": "Trocar idioma",
+  "lang.pt": "Português",
+  "lang.en": "English",
+  "footer.rights": "Todos os direitos reservados.",
+  "footer.built_with": "Construído com Astro + Tailwind."
+}

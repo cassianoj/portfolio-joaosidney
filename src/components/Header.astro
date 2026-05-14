@@ -1,0 +1,93 @@
+---
+import { useTranslations, type Locale } from "../i18n";
+import ThemeToggle from "./ThemeToggle.tsx";
+import LangSwitcher from "./LangSwitcher.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const navLinks = [
+  { href: `/${locale}/`, label: t("nav.home") },
+  { href: `/${locale}/${locale === "pt" ? "sobre" : "about"}`, label: t("nav.about") },
+  { href: `/${locale}/${locale === "pt" ? "projetos" : "projects"}`, label: t("nav.projects") },
+  { href: `/${locale}/dashboards`, label: t("nav.dashboards") },
+  { href: `/${locale}/${locale === "pt" ? "contato" : "contact"}`, label: t("nav.contact") },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-40 border-b border-border bg-bg/80 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a
+      href={`/${locale}/`}
+      class="font-mono text-sm font-semibold tracking-tight text-fg hover:text-accent"
+    >
+      João Sidney
+    </a>
+
+    <nav aria-label="Primary" class="hidden md:block">
+      <ul class="flex items-center gap-6">
+        {
+          navLinks.map((link) => {
+            const isActive =
+              link.href === currentPath ||
+              (link.href !== `/${locale}/` && currentPath.startsWith(link.href));
+            return (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[
+                    "text-sm transition-colors",
+                    isActive
+                      ? "text-accent"
+                      : "text-fg-muted hover:text-fg",
+                  ]}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <LangSwitcher locale={locale} />
+      <ThemeToggle client:load label={t("theme.toggle")} />
+    </div>
+  </div>
+
+  {/* Mobile nav (visible <md) */}
+  <nav aria-label="Primary mobile" class="md:hidden border-t border-border">
+    <ul class="mx-auto flex max-w-6xl gap-4 overflow-x-auto px-4 py-2 text-sm">
+      {
+        navLinks.map((link) => {
+          const isActive =
+            link.href === currentPath ||
+            (link.href !== `/${locale}/` && currentPath.startsWith(link.href));
+          return (
+            <li class="shrink-0">
+              <a
+                href={link.href}
+                class:list={[
+                  "whitespace-nowrap transition-colors",
+                  isActive ? "text-accent" : "text-fg-muted hover:text-fg",
+                ]}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
+</header>

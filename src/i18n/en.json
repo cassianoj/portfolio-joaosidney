@@ -1,0 +1,17 @@
+{
+  "site.title": "João Sidney Cassiano — Portfolio",
+  "site.description": "Data Specialist @ Porto Bank. Hybrid path: industrial engineering, controllership, data and entrepreneurship.",
+  "nav.home": "Home",
+  "nav.about": "About",
+  "nav.projects": "Projects",
+  "nav.dashboards": "Dashboards",
+  "nav.contact": "Contact",
+  "theme.toggle": "Toggle theme",
+  "theme.light": "Light",
+  "theme.dark": "Dark",
+  "lang.switch": "Switch language",
+  "lang.pt": "Português",
+  "lang.en": "English",
+  "footer.rights": "All rights reserved.",
+  "footer.built_with": "Built with Astro + Tailwind."
+}

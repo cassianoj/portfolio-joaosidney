@@ -1,0 +1,64 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getLocaleFromUrl, useTranslations, type Locale } from "../i18n";
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: Locale;
+}
+
+const inferredLocale = getLocaleFromUrl(Astro.url);
+const { title, description, locale = inferredLocale } = Astro.props;
+const t = useTranslations(locale);
+const pageTitle = title ?? t("site.title");
+const pageDescription = description ?? t("site.description");
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    {/* Aplica o tema antes do paint pra evitar flash. */}
+    <script is:inline>
+      (function () {
+        try {
+          const saved = localStorage.getItem("theme");
+          const prefersLight =
+            saved === "light" ||
+            (!saved &&
+              window.matchMedia("(prefers-color-scheme: light)").matches);
+          if (prefersLight) document.documentElement.classList.add("light");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body class="flex min-h-dvh flex-col">
+    <Header locale={locale} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>
