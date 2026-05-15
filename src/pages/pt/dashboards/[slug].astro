@@ -1,0 +1,88 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../../layouts/Base.astro";
+import PowerBIEmbed from "../../../components/PowerBIEmbed.astro";
+import SkillBadge from "../../../components/SkillBadge.astro";
+import { useTranslations } from "../../../i18n";
+
+export async function getStaticPaths() {
+  const all = await getCollection("dashboards");
+  return all
+    .filter((entry) => entry.id.startsWith("pt/"))
+    .map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const locale = "pt" as const;
+const t = useTranslations(locale);
+const { Content } = await render(entry);
+
+const formattedDate = new Date(entry.data.date).toLocaleDateString("pt-BR", {
+  year: "numeric",
+  month: "long",
+});
+---
+
+<Base
+  locale={locale}
+  title={`${entry.data.title} — João Sidney Cassiano`}
+  description={`${entry.data.contexto} · ${entry.data.title}`}
+>
+  <article class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:py-24">
+    <a
+      href="/pt/dashboards/"
+      class="mb-8 inline-flex items-center gap-1 font-mono text-sm text-fg-muted transition-colors hover:text-accent"
+    >
+      <span aria-hidden="true">&larr;</span>
+      {t("dashboards.label.back")}
+    </a>
+
+    <header class="mb-10">
+      <span class="font-mono text-xs uppercase tracking-wider text-accent">
+        {entry.data.contexto}
+      </span>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight text-fg sm:text-5xl">
+        {entry.data.title}
+      </h1>
+      <dl class="mt-6 grid grid-cols-1 gap-4 rounded-lg border border-border bg-surface p-5 sm:grid-cols-2">
+        <div>
+          <dt class="font-mono text-xs uppercase tracking-wider text-fg-muted">
+            {t("dashboards.label.date")}
+          </dt>
+          <dd class="mt-1 text-fg">{formattedDate}</dd>
+        </div>
+        <div>
+          <dt class="font-mono text-xs uppercase tracking-wider text-fg-muted">
+            {t("dashboards.label.context")}
+          </dt>
+          <dd class="mt-1 text-fg">{entry.data.contexto}</dd>
+        </div>
+        <div class="sm:col-span-2">
+          <dt class="font-mono text-xs uppercase tracking-wider text-fg-muted">
+            {t("dashboards.label.tech")}
+          </dt>
+          <dd class="mt-2 flex flex-wrap gap-1.5">
+            {entry.data.tecnologias.map((tech) => <SkillBadge label={tech} />)}
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <PowerBIEmbed
+      locale={locale}
+      src={entry.data.embed_url}
+      title={entry.data.title}
+    />
+
+    <p class="mt-3 font-mono text-xs text-fg-muted">
+      {t("dashboards.embed.note")}
+    </p>
+
+    <div class="prose-content mt-10">
+      <Content />
+    </div>
+  </article>
+</Base>

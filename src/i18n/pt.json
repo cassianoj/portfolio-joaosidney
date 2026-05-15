@@ -38,5 +38,15 @@
   "projects.label.viewProject": "Ver projeto",
   "projects.label.back": "Voltar para projetos",
   "projects.label.featured": "Destaque",
-  "projects.label.gallery": "Galeria"
+  "projects.label.gallery": "Galeria",
+  "dashboards.title": "Dashboards",
+  "dashboards.intro": "Painéis interativos em Power BI publicados como embed. Explore os dashboards que construí em diferentes contextos.",
+  "dashboards.empty": "Nenhum dashboard publicado ainda.",
+  "dashboards.label.context": "Contexto",
+  "dashboards.label.tech": "Tecnologias",
+  "dashboards.label.date": "Publicado em",
+  "dashboards.label.back": "Voltar para dashboards",
+  "dashboards.label.open": "Abrir em nova aba",
+  "dashboards.embed.loading": "Carregando dashboard…",
+  "dashboards.embed.note": "Os dashboards são incorporados via Publish to web do Power BI. A interação completa exige carregamento do iframe."
 }

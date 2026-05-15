@@ -38,5 +38,15 @@
   "projects.label.viewProject": "View project",
   "projects.label.back": "Back to projects",
   "projects.label.featured": "Featured",
-  "projects.label.gallery": "Gallery"
+  "projects.label.gallery": "Gallery",
+  "dashboards.title": "Dashboards",
+  "dashboards.intro": "Interactive Power BI dashboards published as embeds. Explore the panels I've built across different contexts.",
+  "dashboards.empty": "No dashboards published yet.",
+  "dashboards.label.context": "Context",
+  "dashboards.label.tech": "Tech stack",
+  "dashboards.label.date": "Published",
+  "dashboards.label.back": "Back to dashboards",
+  "dashboards.label.open": "Open in new tab",
+  "dashboards.embed.loading": "Loading dashboard…",
+  "dashboards.embed.note": "Dashboards are embedded via Power BI's Publish to web. Full interactivity requires the iframe to load."
 }

@@ -1,0 +1,65 @@
+---
+import { useTranslations, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  src: string;
+  title: string;
+}
+
+const { locale, src, title } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div
+  class="powerbi-embed relative overflow-hidden rounded-lg border border-border bg-surface-2"
+  data-loaded="false"
+>
+  <div class="aspect-[16/10] w-full">
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      allowfullscreen
+      class="powerbi-iframe h-full w-full opacity-0 transition-opacity duration-500"
+      frameborder="0"
+    ></iframe>
+  </div>
+
+  <div
+    class="powerbi-loading pointer-events-none absolute inset-0 flex items-center justify-center gap-3 bg-surface-2 text-fg-muted"
+  >
+    <span
+      class="inline-block h-3 w-3 animate-pulse rounded-full bg-accent"
+      aria-hidden="true"
+    ></span>
+    <span class="font-mono text-sm">{t("dashboards.embed.loading")}</span>
+  </div>
+
+  <div class="flex items-center justify-end gap-3 border-t border-border bg-surface px-4 py-2">
+    <a
+      href={src}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-1 font-mono text-xs text-fg-muted transition-colors hover:text-accent"
+    >
+      {t("dashboards.label.open")}
+      <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</div>
+
+<script>
+  const wrappers = document.querySelectorAll<HTMLDivElement>(".powerbi-embed");
+  wrappers.forEach((wrapper) => {
+    const iframe = wrapper.querySelector<HTMLIFrameElement>(".powerbi-iframe");
+    const loading = wrapper.querySelector<HTMLDivElement>(".powerbi-loading");
+    if (!iframe || !loading) return;
+    iframe.addEventListener("load", () => {
+      iframe.classList.remove("opacity-0");
+      loading.style.opacity = "0";
+      wrapper.dataset.loaded = "true";
+      window.setTimeout(() => loading.remove(), 500);
+    });
+  });
+</script>

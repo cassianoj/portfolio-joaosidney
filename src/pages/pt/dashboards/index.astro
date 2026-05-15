@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../../layouts/Base.astro";
+import DashboardCard from "../../../components/DashboardCard.astro";
+import { useTranslations } from "../../../i18n";
+
+const locale = "pt" as const;
+const t = useTranslations(locale);
+
+const all = await getCollection("dashboards");
+const dashboards = all
+  .filter((entry) => entry.id.startsWith("pt/"))
+  .sort(
+    (a, b) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+  );
+---
+
+<Base locale={locale} title={`${t("dashboards.title")} — João Sidney Cassiano`}>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+    <header class="mb-10">
+      <p class="font-mono text-sm text-accent">{t("dashboards.title")}</p>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-fg sm:text-5xl">
+        Painéis Power BI
+      </h1>
+      <p class="mt-4 max-w-3xl text-lg text-fg-muted">{t("dashboards.intro")}</p>
+    </header>
+
+    {
+      dashboards.length === 0 ? (
+        <p class="text-fg-muted">{t("dashboards.empty")}</p>
+      ) : (
+        <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {dashboards.map((d) => (
+            <li>
+              <DashboardCard
+                locale={locale}
+                slug={d.data.slug}
+                title={d.data.title}
+                contexto={d.data.contexto}
+                tecnologias={d.data.tecnologias}
+                date={d.data.date}
+                capa={d.data.capa}
+              />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</Base>
