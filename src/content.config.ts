@@ -27,13 +27,25 @@ const dashboardSchema = z.object({
   capa: z.string().optional(),
 });
 
+// `entry` chega sem extensão (ex: "pt/databricks-pipeline"). Preservamos
+// o caminho relativo como id pra não colidir entre as pastas pt/ e en/.
+const keepPathAsId = ({ entry }: { entry: string }) => entry;
+
 const projetos = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/projetos" }),
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/projetos",
+    generateId: keepPathAsId,
+  }),
   schema: projetoSchema,
 });
 
 const dashboards = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/dashboards" }),
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/dashboards",
+    generateId: keepPathAsId,
+  }),
   schema: dashboardSchema,
 });
 

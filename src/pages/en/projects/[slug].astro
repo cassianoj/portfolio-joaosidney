@@ -1,0 +1,109 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../../layouts/Base.astro";
+import Gallery from "../../../components/Gallery.astro";
+import SkillBadge from "../../../components/SkillBadge.astro";
+import { useTranslations } from "../../../i18n";
+
+export async function getStaticPaths() {
+  const all = await getCollection("projetos");
+  return all
+    .filter((entry) => entry.id.startsWith("en/"))
+    .map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const locale = "en" as const;
+const t = useTranslations(locale);
+const { Content } = await render(entry);
+
+const formattedDate = new Date(entry.data.date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+});
+---
+
+<Base
+  locale={locale}
+  title={`${entry.data.title} — João Sidney Cassiano`}
+  description={`${entry.data.empresa} · ${entry.data.title}`}
+>
+  <article class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:py-24">
+    <a
+      href="/en/projects/"
+      class="mb-8 inline-flex items-center gap-1 font-mono text-sm text-fg-muted transition-colors hover:text-accent"
+    >
+      <span aria-hidden="true">&larr;</span>
+      {t("projects.label.back")}
+    </a>
+
+    <header class="mb-10">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="font-mono text-xs uppercase tracking-wider text-accent">
+          {t(`projects.context.${entry.data.contexto}` as any)}
+        </span>
+        <span class="font-mono text-xs uppercase tracking-wider text-fg-muted">
+          {t(`projects.category.${entry.data.categoria}` as any)}
+        </span>
+        {entry.data.destaque && (
+          <span class="rounded-full border border-accent px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
+            {t("projects.label.featured")}
+          </span>
+        )}
+      </div>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight text-fg sm:text-5xl">
+        {entry.data.title}
+      </h1>
+      <dl class="mt-6 grid grid-cols-1 gap-4 rounded-lg border border-border bg-surface p-5 sm:grid-cols-2">
+        <div>
+          <dt class="font-mono text-xs uppercase tracking-wider text-fg-muted">
+            {t("projects.label.company")}
+          </dt>
+          <dd class="mt-1 text-fg">{entry.data.empresa}</dd>
+        </div>
+        <div>
+          <dt class="font-mono text-xs uppercase tracking-wider text-fg-muted">
+            {t("projects.label.date")}
+          </dt>
+          <dd class="mt-1 text-fg">{formattedDate}</dd>
+        </div>
+        <div class="sm:col-span-2">
+          <dt class="font-mono text-xs uppercase tracking-wider text-fg-muted">
+            {t("projects.label.tech")}
+          </dt>
+          <dd class="mt-2 flex flex-wrap gap-1.5">
+            {entry.data.tecnologias.map((tech) => <SkillBadge label={tech} />)}
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    {
+      entry.data.capa && (
+        <img
+          src={entry.data.capa}
+          alt={entry.data.title}
+          class="mb-10 w-full rounded-lg border border-border"
+        />
+      )
+    }
+
+    <div class="prose-content">
+      <Content />
+    </div>
+
+    {
+      entry.data.imagens.length > 0 && (
+        <section class="mt-12">
+          <h2 class="mb-6 text-2xl font-bold tracking-tight text-fg">
+            {t("projects.label.gallery")}
+          </h2>
+          <Gallery images={entry.data.imagens} />
+        </section>
+      )
+    }
+  </article>
+</Base>

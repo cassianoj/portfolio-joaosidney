@@ -1,0 +1,42 @@
+---
+interface Image {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  images: Image[];
+}
+
+const { images } = Astro.props;
+---
+
+{
+  images.length > 0 && (
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {images.map((img) => (
+        <figure class="overflow-hidden rounded-lg border border-border bg-surface">
+          <a
+            href={img.src}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block"
+            aria-label={img.alt}
+          >
+            <img
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              class="aspect-[4/3] w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+            />
+          </a>
+          {img.alt && (
+            <figcaption class="px-3 py-2 font-mono text-xs text-fg-muted">
+              {img.alt}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  )
+}
